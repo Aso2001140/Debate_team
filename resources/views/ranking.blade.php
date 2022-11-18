@@ -44,7 +44,11 @@
                                 <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
                             </svg>
                         </span>
-                        <a class="fs-1 text-black">1st</a>
+                        <!--順位-->
+                        <div hidden> {{$j=1}}</div>
+
+
+                        <a class="fs-1 text-black">{{$j}}st</a>
                     </div>
                     <div class="text-center fs-2">
                         <a class="">{{$users[0]->name}}</a>
@@ -59,7 +63,11 @@
                 <div class="col border-end border-3">
                     <div class="col-auto  text-center ">
                         <div class="col text-center fs-2 ">
-                            <a class="text-black">2nd</a>
+                            @if($users[1]->u_point==$users[0]->u_point)
+                                <a class="text-black">{{$j}}st</a>
+                            @else
+                            <a class="text-black">{{$j=$j+1}}nd</a>
+                                @endif
                         </div>
                         <a class="">{{$users[1]->name}}</a>
                         <a class="">{{$users[1]->u_point}}Pt</a>
@@ -70,7 +78,16 @@
                 <div class="col ">
                     <div class="col-auto  ">
                         <div class="col text-center fs-2">
-                            <a class="text-black">3rd</a>
+                            @if($users[1]->u_point==$users[2]->u_point)
+                                @if($j==1)
+                                    <a class="text-black">{{$j}}st</a>
+                                @elseif($j==2)
+                                    <a class="text-black">{{$j}}nd</a>
+                                    @endif
+@else
+                                <a class="text-black">{{$j=$j+1}}rd</a>
+                            @endif
+
                         </div>
                         <div class="text-center">
                             <a class="">{{$users[2]->name}}</a>
@@ -90,9 +107,27 @@
     @for($i = 3; $i <count($users); $i++)
         <div class="d-flex justify-content-center text-start border-bottom  border-3">
                     <span class="fs-4 ">
-                             {{$i+1}}th
+
+                        @if($users[$i]->u_point==$users[$i-1]->u_point)
+                            @if($j==1)
+                            {{$j}}st
+                            @elseif($j==2)
+                                {{$j}}nd
+                            @elseif($j==3)
+                                {{$j}}}rd
+                            @else
+                                {{$j}}th
+                            @endif
                             {{$users[$i]->name}}
                             Point ：{{$users[$i]->u_point}}
+
+                            @else
+
+                             {{$j=$j+1}}th
+                            {{$users[$i]->name}}
+                            Point ：{{$users[$i]->u_point}}
+
+                            @endif
                      </span>
         </div>
     @endfor
